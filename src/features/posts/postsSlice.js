@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 // Async thunk for fetching a user's posts
 export const fetchPostsByUser = createAsyncThunk(
@@ -15,7 +16,7 @@ export const fetchPostsByUser = createAsyncThunk(
         id: doc.id,
         ...doc.data(),
       }));
-
+      console.log(docs);
       return docs; //output 'docs' to action.payload
     } catch (error) {
       console.error(error);
@@ -27,13 +28,20 @@ export const fetchPostsByUser = createAsyncThunk(
 // Async thunk to create a post
 export const savePost = createAsyncThunk(
   "posts/savePost",
-  async ({ userId, postContent }) => {
+  async ({ userId, postContent, file }) => {
     try {
+      let imageUrl = "";
+
+      if (file !== null) {
+        const imageRef = ref(storage, `posts/${file.name}`);
+        const response = await uploadBytes(imageRef, file);
+        imageUrl = await getDownloadURL(response.ref);
+      }
+
       const postsRef = collection(db, `users/${userId}/posts`);
-      console.log(`users/${userId}/posts`);
       const newPostRef = doc(postsRef);
-      console.log(postContent);
-      await setDoc(newPostRef, { content: postContent, likes: [] });
+
+      await setDoc(newPostRef, { content: postContent, likes: [], imageUrl });
       const newPost = await getDoc(newPostRef);
 
       const post = {
