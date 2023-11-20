@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Container, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
 import ProfileSideBar from "../components/ProfileSideBar";
