@@ -12,11 +12,7 @@ export default function NewPostModal({ show, handleClose }) {
   const userId = currentUser.uid;
 
   const handleSave = () => {
-<<<<<<< HEAD
     dispatch(savePost({ userId, postContent, file}));
-=======
-    dispatch(savePost({ userId, postContent, file }));
->>>>>>> 6d9a590508d1e77978933ecba98d34e6c9b467bf
     handleClose();
     setPostContent("");
     setFile(null);
