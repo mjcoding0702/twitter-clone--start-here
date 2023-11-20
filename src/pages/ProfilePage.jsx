@@ -12,11 +12,9 @@ export default function ProfilePage() {
   const { currentUser } = useContext(AuthContext);
 
   // Check for authToken immediately upon component mount and whenever authToken changes
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/login"); //Redirect to login if no auth token is present
-    }
-  }, [currentUser, navigate]);
+  if (!currentUser) {
+    navigate("/login"); //Redirect to login if no auth token is present
+  }
 
   const handleLogout = () => {
     auth.signOut();  
