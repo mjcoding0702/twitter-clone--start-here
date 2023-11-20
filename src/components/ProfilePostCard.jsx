@@ -8,6 +8,10 @@ import UpdatePostModal from "./UpdatePostModal";
 export default function ProfilePostCard({ post }) {
   const { content, id: postId, imageUrl } = post;
   const [likes, setLikes] = useState([]);
+<<<<<<< HEAD
+=======
+  const { content, id: postId, imageUrl } = post;
+>>>>>>> 6d9a590508d1e77978933ecba98d34e6c9b467bf
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
   const userId = currentUser.uid;

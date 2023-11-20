@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import {
   collection,
   getDocs,
@@ -67,6 +68,11 @@ export const updatePost = createAsyncThunk(
     }
   }
 );
+=======
+import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
+import { db, storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+>>>>>>> 6d9a590508d1e77978933ecba98d34e6c9b467bf
 
 // Async thunk for fetching a user's posts
 export const fetchPostsByUser = createAsyncThunk(
@@ -81,7 +87,7 @@ export const fetchPostsByUser = createAsyncThunk(
         id: doc.id,
         ...doc.data(),
       }));
-
+      console.log(docs);
       return docs; //output 'docs' to action.payload
     } catch (error) {
       console.error(error);
@@ -96,7 +102,11 @@ export const savePost = createAsyncThunk(
   async ({ userId, postContent, file }) => {
     try {
       let imageUrl = "";
+<<<<<<< HEAD
       console.log(file);
+=======
+
+>>>>>>> 6d9a590508d1e77978933ecba98d34e6c9b467bf
       if (file !== null) {
         const imageRef = ref(storage, `posts/${file.name}`);
         const response = await uploadBytes(imageRef, file);
@@ -105,6 +115,10 @@ export const savePost = createAsyncThunk(
 
       const postsRef = collection(db, `users/${userId}/posts`);
       const newPostRef = doc(postsRef);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6d9a590508d1e77978933ecba98d34e6c9b467bf
       await setDoc(newPostRef, { content: postContent, likes: [], imageUrl });
       const newPost = await getDoc(newPostRef);
 
